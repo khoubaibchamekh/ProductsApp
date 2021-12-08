@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct PresentableProduct {
+struct PresentableProduct: Equatable {
     let identifier: String
     let description: String
     let location: String
-    let imageURL: String
+    let imageURL: URL?
 }

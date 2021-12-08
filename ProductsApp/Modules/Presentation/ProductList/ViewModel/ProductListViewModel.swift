@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol ProductListViewModelOutput {
+protocol ProductListViewModelProtocol {
     func fetchProducts(completion: @escaping (Result<[PresentableProduct], Error>) -> Void)
 }
 
-class ProductListViewModel: ProductListViewModelOutput {
+class ProductListViewModel: ProductListViewModelProtocol {
     let productRepository: ProductRepository
     
     init(productRepository: ProductRepository) {
@@ -27,7 +27,7 @@ class ProductListViewModel: ProductListViewModelOutput {
                         identifier: $0.identifier,
                         description: $0.description,
                         location: $0.location,
-                        imageURL: $0.imageURL
+                        imageURL: URL(string: $0.imageURL)
                     )
                 }
                 

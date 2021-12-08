@@ -7,9 +7,16 @@
 
 import Foundation
 
-struct Product {
+class Product {
     let identifier: String
     let description: String
     let location: String
     let imageURL: String
+    
+    init(identifier: String, description: String, location: String, imageURL: String) {
+        self.identifier = identifier
+        self.description = description
+        self.location = location
+        self.imageURL = imageURL
+    }
 }
