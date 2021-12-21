@@ -19,7 +19,7 @@ class ProductListViewModel: ProductListViewModelProtocol {
     }
     
     func fetchProducts(completion: @escaping (Result<[PresentableProduct], Error>) -> Void) {
-        productRepository.fetch { [weak self] result in
+        productRepository.fetch { result in
             switch result {
             case .success(let response):
                 let products = response.map {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PresentableProduct: Equatable {
+struct PresentableProduct: Equatable, Hashable {
     let identifier: String
     let description: String
     let location: String
