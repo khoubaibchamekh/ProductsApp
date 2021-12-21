@@ -29,6 +29,25 @@ class ProductRepositoryTestCase: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
+    func test_fetchProductsWithError() {
+        let expectedResult: ApiError = .dataError
+        let sut = makeSUT(withExpectedResult: .failure(expectedResult))
+        let expectation = XCTestExpectation(description: "Expecting 2 products")
+        sut.fetch { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertNotNil(error)
+                XCTAssertEqual(error as? ApiError, expectedResult)
+                expectation.fulfill()
+                
+            default:
+                break
+            }
+        }
+        
+        wait(for: [expectation], timeout: 1)
+    }
+    
     // MARK: Helpers
     private func makeSUT(withExpectedResult result: Result<[ProductAPI], ApiError>) -> ProductRepository {
         let sut = ProductService(httpClient: HttpClientMock<[ProductAPI]>(result: result))
