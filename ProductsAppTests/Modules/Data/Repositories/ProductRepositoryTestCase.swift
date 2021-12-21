@@ -19,7 +19,7 @@ class ProductRepositoryTestCase: XCTestCase {
         sut.fetch { result in
             switch result {
             case let .success(products):
-                XCTAssertEqual(products.count, 2)
+                XCTAssertEqual(products.count, expectedResult.count)
                 expectation.fulfill()
             case let .failure(error):
                 XCTAssertNil(error)
