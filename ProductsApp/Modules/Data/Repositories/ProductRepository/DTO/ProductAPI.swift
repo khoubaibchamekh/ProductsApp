@@ -7,11 +7,21 @@
 
 import Foundation
 
-struct ProductAPI: Decodable {
+struct ProductAPI {
     let identifier: String
     var description: String
     var location: String
     var imageURL: String
+
+    internal init(identifier: String, description: String, location: String, imageURL: String) {
+        self.identifier = identifier
+        self.description = description
+        self.location = location
+        self.imageURL = imageURL
+    }
+}
+
+extension ProductAPI: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case identifier = "id"

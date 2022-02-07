@@ -10,16 +10,17 @@ import XCTest
 
 class ProductRepositoryTestCase: XCTestCase {
     func test_fetchProductsWithSuccess() {
-        let expectedResult = [
+        let expectedResult = ProductsAPIResponse(items: [
             ProductAPI(identifier: "", description: "", location: "", imageURL: ""),
             ProductAPI(identifier: "", description: "", location: "", imageURL: "")
-        ]
+        ])
+        
         let sut = makeSUT(withExpectedResult: .success(expectedResult))
         let expectation = XCTestExpectation(description: "Expecting 2 products")
         sut.fetch { result in
             switch result {
             case let .success(products):
-                XCTAssertEqual(products.count, expectedResult.count)
+                XCTAssertEqual(products.count, expectedResult.items.count)
                 expectation.fulfill()
             case let .failure(error):
                 XCTAssertNil(error)
@@ -32,7 +33,7 @@ class ProductRepositoryTestCase: XCTestCase {
     func test_fetchProductsWithError() {
         let expectedResult: ApiError = .dataError
         let sut = makeSUT(withExpectedResult: .failure(expectedResult))
-        let expectation = XCTestExpectation(description: "Expecting 2 products")
+        let expectation = XCTestExpectation(description: "Expecting Error")
         sut.fetch { result in
             switch result {
             case let .failure(error):
@@ -49,8 +50,8 @@ class ProductRepositoryTestCase: XCTestCase {
     }
     
     // MARK: Helpers
-    private func makeSUT(withExpectedResult result: Result<[ProductAPI], ApiError>) -> ProductRepository {
-        let sut = ProductService(httpClient: HttpClientMock<[ProductAPI]>(result: result))
+    private func makeSUT(withExpectedResult result: Result<ProductsAPIResponse, ApiError>) -> ProductRepository {
+        let sut = ProductRepositoryImpl(httpClient: HttpClientMock<ProductsAPIResponse>(result: result))
         return sut
     }
 }
