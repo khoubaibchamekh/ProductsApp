@@ -30,6 +30,7 @@ class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureTableView()
         configureDataSource()
         viewModel?.fetchProducts(completion: { [weak self] result in
             switch result {
@@ -46,11 +47,28 @@ class ProductListViewController: UIViewController {
         navigationItem.title = "Products"
     }
     
+    private func configureTableView() {
+        tableView.rowHeight = 100
+        tableView.register(
+            UINib.init(
+                nibName: ProductTableViewCell.identifier,
+                bundle: Bundle(for: type(of: self))
+            ),
+            forCellReuseIdentifier: ProductTableViewCell.identifier
+        )
+    }
+    
     private func configureDataSource() {
         dataSource = DataSource(
             tableView: tableView,
             cellProvider: { (tableView, indexPath, product) -> UITableViewCell? in
-                UITableViewCell(frame: .zero)
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: ProductTableViewCell.identifier,
+                    for: indexPath
+                ) as? ProductTableViewCell
+                
+                cell?.configure(using: product)
+                return cell
             }
         )
     }
