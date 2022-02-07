@@ -22,8 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = UINavigationController(
             rootViewController: ProductListViewController(
                 viewModel: ProductListViewModel(
-                    productRepository: ProductService(
-                        httpClient: APIClient()
+                    productRepository: ProductRepositoryThreadingDecorator(
+                        ProductRepositoryImpl(
+                            httpClient: APIClient()
+                        )
                     )
                 )
             )
