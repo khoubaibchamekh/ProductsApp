@@ -6,21 +6,16 @@
 //
 
 import UIKit
-
-enum Section {
-    case products
-}
+import RxSwift
+import RxCocoa
 
 class ProductListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    //MARK: Typealias
-    private typealias DataSource = UITableViewDiffableDataSource<Section, PresentableProduct>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PresentableProduct>
     // MARK: Properties
     private var viewModel: ProductListViewModelProtocol?
-    private var dataSource: DataSource!
+    private let disposeBag = DisposeBag()
     
     convenience init(viewModel: ProductListViewModelProtocol?) {
         self.init()
@@ -32,14 +27,7 @@ class ProductListViewController: UIViewController {
         configureUI()
         configureTableView()
         configureDataSource()
-        viewModel?.fetchProducts(completion: { [weak self] result in
-            switch result {
-            case .success(let products):
-                self?.updateSections(products: products)
-            case .failure(let error):
-                debugPrint(error.localizedDescription)
-            }
-        })
+        viewModel?.fetchProducts()
     }
     
     //MARK: - Setup UI
@@ -48,7 +36,6 @@ class ProductListViewController: UIViewController {
     }
     
     private func configureTableView() {
-        tableView.rowHeight = 100
         tableView.register(
             UINib.init(
                 nibName: ProductTableViewCell.identifier,
@@ -59,30 +46,18 @@ class ProductListViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        dataSource = DataSource(
-            tableView: tableView,
-            cellProvider: { (tableView, indexPath, product) -> UITableViewCell? in
-                let cell = tableView.dequeueReusableCell(
-                    withIdentifier: ProductTableViewCell.identifier,
-                    for: indexPath
-                ) as? ProductTableViewCell
-                
-                cell?.configure(using: product)
-                return cell
-            }
-        )
-    }
-    
-    private func updateSections(products: [PresentableProduct]) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.products])
-        snapshot.appendItems(products)
-        dataSource.apply(snapshot, animatingDifferences: true)
-    }
-}
-
-extension ProductListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewModel = self.viewModel else { return }
         
+        viewModel
+            .tableDataSource
+            .bind(
+                to: tableView.rx.items(
+                    cellIdentifier: ProductTableViewCell.identifier,
+                    cellType: ProductTableViewCell.self
+                )
+            ) { row, product, cell in
+                cell.configure(using: product)
+            }
+            .disposed(by: disposeBag)
     }
 }

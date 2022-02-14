@@ -6,35 +6,42 @@
 //
 
 import Foundation
+import RxRelay
 
 protocol ProductListViewModelProtocol {
-    func fetchProducts(completion: @escaping (Result<[PresentableProduct], Error>) -> Void)
+    var tableDataSource: BehaviorRelay<[ProductCellViewModel]> { get }
+    func fetchProducts()
 }
 
 class ProductListViewModel: ProductListViewModelProtocol {
     let productRepository: ProductRepository
+    var tableDataSource = BehaviorRelay<[ProductCellViewModel]>(value: [])
     
     init(productRepository: ProductRepository) {
         self.productRepository = productRepository
     }
     
-    func fetchProducts(completion: @escaping (Result<[PresentableProduct], Error>) -> Void) {
-        productRepository.fetch { result in
+    func fetchProducts() {
+        productRepository.fetch { [weak self] result in
             switch result {
             case .success(let response):
-                let products = response.map {
-                    PresentableProduct(
+                let products = response
+                    .sorted { $0.isSpecialBrand && !$1.isSpecialBrand }
+                    .map {
+                        ProductCellViewModel(
                         identifier: $0.identifier,
-                        description: $0.description,
-                        location: $0.location,
-                        imageURL: URL(string: $0.imageURL)
+                        name: $0.name,
+                        price: $0.price,
+                        description: $0.descriptionText,
+                        imageURL: URL(string: $0.smallImageURL),
+                        brandName: $0.brand.name
                     )
                 }
                 
-                completion(.success(products))
+                self?.tableDataSource.accept(products)
                 
             case .failure(let error):
-                completion(.failure(error))
+                debugPrint(error)
             }
         }
     }
