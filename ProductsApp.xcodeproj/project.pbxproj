@@ -29,7 +29,6 @@
 		C28EEFE127B9AC5C00E6BD7D /* FetchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFE027B9AC5C00E6BD7D /* FetchOptions.swift */; };
 		C28EEFE327B9AC6E00E6BD7D /* RealmError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFE227B9AC6E00E6BD7D /* RealmError.swift */; };
 		C28EEFE527B9AC8700E6BD7D /* MappableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFE427B9AC8700E6BD7D /* MappableProtocol.swift */; };
-		C28EEFE727B9ACA600E6BD7D /* URL+Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFE627B9ACA600E6BD7D /* URL+Document.swift */; };
 		C28EEFE927B9ACE100E6BD7D /* RealmObject+Storable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFE827B9ACE100E6BD7D /* RealmObject+Storable.swift */; };
 		C28EEFEB27B9AE9B00E6BD7D /* RLMProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFEA27B9AE9B00E6BD7D /* RLMProduct.swift */; };
 		C28EEFED27B9AF0700E6BD7D /* BrandAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFEC27B9AF0700E6BD7D /* BrandAPI.swift */; };
@@ -95,7 +94,6 @@
 		C28EEFE027B9AC5C00E6BD7D /* FetchOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchOptions.swift; sourceTree = "<group>"; };
 		C28EEFE227B9AC6E00E6BD7D /* RealmError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmError.swift; sourceTree = "<group>"; };
 		C28EEFE427B9AC8700E6BD7D /* MappableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappableProtocol.swift; sourceTree = "<group>"; };
-		C28EEFE627B9ACA600E6BD7D /* URL+Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Document.swift"; sourceTree = "<group>"; };
 		C28EEFE827B9ACE100E6BD7D /* RealmObject+Storable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmObject+Storable.swift"; sourceTree = "<group>"; };
 		C28EEFEA27B9AE9B00E6BD7D /* RLMProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLMProduct.swift; sourceTree = "<group>"; };
 		C28EEFEC27B9AF0700E6BD7D /* BrandAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandAPI.swift; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 		C28EEFD727B9ABC800E6BD7D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C28EEFE627B9ACA600E6BD7D /* URL+Document.swift */,
 				C28EEFE827B9ACE100E6BD7D /* RealmObject+Storable.swift */,
 			);
 			path = Extensions;
@@ -707,7 +704,6 @@
 				C28EEFCF27B96B2000E6BD7D /* HTTPSession.swift in Sources */,
 				C28EEFFA27B9CC2E00E6BD7D /* ConfigurationType.swift in Sources */,
 				C28EEFE527B9AC8700E6BD7D /* MappableProtocol.swift in Sources */,
-				C28EEFE727B9ACA600E6BD7D /* URL+Document.swift in Sources */,
 				C21F58C927BA6D340097A58A /* ProductCellViewModel.swift in Sources */,
 				C28EEFDF27B9AC3500E6BD7D /* RealmStorageContext.swift in Sources */,
 				C28EEFF527B9B0BD00E6BD7D /* Brand.swift in Sources */,
