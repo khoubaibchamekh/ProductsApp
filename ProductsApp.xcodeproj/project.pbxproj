@@ -37,6 +37,8 @@
 		C28EEFF527B9B0BD00E6BD7D /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFF427B9B0BD00E6BD7D /* Brand.swift */; };
 		C28EEFF727B9B0EC00E6BD7D /* Brand+Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFF627B9B0EC00E6BD7D /* Brand+Mappable.swift */; };
 		C28EEFFA27B9CC2E00E6BD7D /* ConfigurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28EEFF927B9CC2E00E6BD7D /* ConfigurationType.swift */; };
+		C29CA3BB27BAA473003ED7DC /* ProductRepositoryIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CA3BA27BAA473003ED7DC /* ProductRepositoryIntegrationTests.swift */; };
+		C29CA3BE27BAA71A003ED7DC /* HttpClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CA3BD27BAA71A003ED7DC /* HttpClientStub.swift */; };
 		C2AAB7B62761464E00766D3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAB7B52761464E00766D3C /* AppDelegate.swift */; };
 		C2AAB7B82761464E00766D3C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AAB7B72761464E00766D3C /* SceneDelegate.swift */; };
 		C2AAB7C22761465500766D3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2AAB7C02761465500766D3C /* LaunchScreen.storyboard */; };
@@ -102,6 +104,8 @@
 		C28EEFF427B9B0BD00E6BD7D /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		C28EEFF627B9B0EC00E6BD7D /* Brand+Mappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Brand+Mappable.swift"; sourceTree = "<group>"; };
 		C28EEFF927B9CC2E00E6BD7D /* ConfigurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationType.swift; sourceTree = "<group>"; };
+		C29CA3BA27BAA473003ED7DC /* ProductRepositoryIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryIntegrationTests.swift; sourceTree = "<group>"; };
+		C29CA3BD27BAA71A003ED7DC /* HttpClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientStub.swift; sourceTree = "<group>"; };
 		C2AAB7B22761464E00766D3C /* ProductsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AAB7B52761464E00766D3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2AAB7B72761464E00766D3C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				C21E970C276F8BC00043F41B /* ProductRepositoryTestCase.swift */,
+				C29CA3BA27BAA473003ED7DC /* ProductRepositoryIntegrationTests.swift */,
+				C29CA3BC27BAA70F003ED7DC /* Stub */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -302,6 +308,14 @@
 				C28EEFE827B9ACE100E6BD7D /* RealmObject+Storable.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C29CA3BC27BAA70F003ED7DC /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				C29CA3BD27BAA71A003ED7DC /* HttpClientStub.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 		C2AAB7A92761464E00766D3C = {
@@ -727,6 +741,8 @@
 			files = (
 				C21F58C727BA5E070097A58A /* StorageContextTestsCase.swift in Sources */,
 				C28EEFC127B9615D00E6BD7D /* HTTPClientTestsCase.swift in Sources */,
+				C29CA3BB27BAA473003ED7DC /* ProductRepositoryIntegrationTests.swift in Sources */,
+				C29CA3BE27BAA71A003ED7DC /* HttpClientStub.swift in Sources */,
 				C21E970D276F8BC00043F41B /* ProductRepositoryTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

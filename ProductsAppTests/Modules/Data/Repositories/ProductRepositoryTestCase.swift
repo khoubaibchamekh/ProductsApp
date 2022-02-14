@@ -137,29 +137,6 @@ class ProductRepositoryTestCase: XCTestCase {
     }
 }
 
-class HttpClientStub<T: Decodable>: HttpClient {
-    private let result: Result<T, ApiError>
-    
-    init(result: Result<T, ApiError>) {
-        self.result = result
-    }
-    
-    func request<T>(_ request: ApiRequest, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-        switch result {
-        case let .success(response):
-            if let response = response as? T {
-                completion(.success(response))
-
-            } else {
-                completion(.failure(ApiError.dataError))
-            }
-            
-        case let .failure(error):
-            completion(.failure(error))
-        }
-    }
-}
-
 class StorageContextStub: StorageContext {
     private let result: [Product]
     init(result: [Product] = []) {
