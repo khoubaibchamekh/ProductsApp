@@ -8,6 +8,12 @@
 import Foundation
 
 class APIClient: HttpClient {
+    private let httpSession: HTTPSession
+    
+    init(httpSession: HTTPSession) {
+        self.httpSession = httpSession
+    }
+    
     func request<T>(_ request: ApiRequest, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
         ///builds request
         var urlRequest = URLRequest(url: request.resource)
@@ -16,7 +22,7 @@ class APIClient: HttpClient {
         urlRequest.httpBody = request.json
         urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         ///performs request
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        let task = httpSession.dataTask(with: urlRequest) { data, response, error in
                         
             guard error == nil else {
                 completion(.failure(ApiError.requestFailed(error: "\(error?.localizedDescription ?? "ERROR")")))
@@ -37,12 +43,13 @@ class APIClient: HttpClient {
 
             do {
                 json = try JSONDecoder().decode(T.self, from: data)
-            } catch {
+            } catch let error {
+                debugPrint(error)
                 completion(.failure(ApiError.serializationError))
                 return
             }
 
-            if response.statusCode != request.expectedCode {
+            if response.statusCode != 200 {
                 let responseText: String? = String(data: data, encoding: String.Encoding.utf8)
                 completion(.failure(ApiError.requestFailed(error: responseText ?? "ERROR")))
                 return
