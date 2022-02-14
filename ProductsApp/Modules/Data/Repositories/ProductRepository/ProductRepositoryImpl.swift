@@ -7,37 +7,43 @@
 
 import Foundation
 
-class ProductRepositoryImpl: ProductRepository {
-    let httpClient: HttpClient
-    private let productsEndPoint = "https://sephoraios.github.io/items.json"
+final class ProductRepositoryImpl: ProductRepository {
+    private let httpClient: HttpClient
+    private let storageContext: StorageContext
     
-    init(httpClient: HttpClient) {
+    init(httpClient: HttpClient, storageContext: StorageContext) {
         self.httpClient = httpClient
+        self.storageContext = storageContext
     }
     
     func fetch(completion: @escaping (Result<[Product], Error>) -> Void) {
-        guard let url = URL(string: productsEndPoint) else {
-            completion(.failure(ApiError.requestFailed(error: "Invalid URL")))
-            return
-        }
-        
-        let apiRequest = ApiRequest(resource: url)
-        httpClient.request(apiRequest) { (result: Result<ProductsAPIResponse, Error>) in
+        let apiRequest = ApiRequest(resource: Constants.productsEndPoint)
+        httpClient.request(apiRequest) { [weak self] (result: Result<[ProductAPI], Error>) in
             switch result {
             case .success(let response):
-                let products = response.items.map {
+                let products = response.map {
                     Product(
                         identifier: $0.identifier,
-                        description: $0.description,
-                        location: $0.location,
-                        imageURL: $0.imageURL
+                        name: $0.name,
+                        descriptionText: $0.descriptionText,
+                        price: $0.price,
+                        brand: Brand(identifier: $0.brand.identifier, name: $0.brand.name),
+                        isSpecialBrand: $0.isSpecialBrand,
+                        smallImageURL: $0.smallImageURL,
+                        largeImageURL: $0.largeImageURL
                     )
                 }
                 
+                try? self?.storageContext.save(products.map { $0.mapToPersistenceObject() })                
                 completion(.success(products))
                 
             case .failure(let error):
-                completion(.failure(error))
+                if let products = self?.storageContext.fetch(Product.PersistenceType.self, options: nil),
+                    !products.isEmpty {
+                    completion(.success(products.map { Product.mapFromPersistenceObject($0) }))
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }

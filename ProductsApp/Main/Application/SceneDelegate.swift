@@ -24,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 viewModel: ProductListViewModel(
                     productRepository: ProductRepositoryThreadingDecorator(
                         ProductRepositoryImpl(
-                            httpClient: APIClient()
+                            httpClient: APIClient(httpSession: URLSession.shared),
+                            storageContext: RealmStorageContext()
                         )
                     )
                 )
